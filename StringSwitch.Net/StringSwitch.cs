@@ -14,7 +14,7 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
     public StringSwitch<T> IgnoreCase => new(StringComparison.OrdinalIgnoreCase, this);
 
 
-    private readonly Dictionary<string, Func<T>> switches = new();
+    private readonly Dictionary<string, Func<T>> _switches = new();
 
 
     public StringSwitch() : this(StringComparison.Ordinal, default(StringSwitch<T>))
@@ -24,12 +24,12 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 
     public StringSwitch(StringComparison comparison = StringComparison.Ordinal, StringSwitch stringSwitch = null)
     {
-        switches = new(StringComparisonHelper.FromComparison(comparison));
+        _switches = new(StringComparisonHelper.FromComparison(comparison));
         if (stringSwitch is not null)
         {
             foreach (var item in stringSwitch)
             {
-                switches[item.Key] = () =>
+                _switches[item.Key] = () =>
                 {
                     item.Value();
                     return default;
@@ -40,12 +40,12 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 
     public StringSwitch(StringComparison comparison = StringComparison.Ordinal, StringSwitch<T> stringSwitch = null)
     {
-        switches = new(StringComparisonHelper.FromComparison(comparison));
-        if (stringSwitch?.switches is not null)
+        _switches = new(StringComparisonHelper.FromComparison(comparison));
+        if (stringSwitch?._switches is not null)
         {
-            foreach (var item in stringSwitch?.switches)
+            foreach (var item in stringSwitch?._switches)
             {
-                switches[item.Key] = item.Value;
+                _switches[item.Key] = item.Value;
             }
         }
     }
@@ -55,13 +55,13 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 
     public StringSwitch<T> Case(string key, Func<T> action)
     {
-        switches[key] = action;
+        _switches[key] = action;
         return this;
     }
 
     public T Execute(string value)
     {
-        if (switches.TryGetValue(value, out var func))
+        if (_switches.TryGetValue(value, out var func))
         {
             return func();
         }
@@ -71,7 +71,7 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 
     public void Execute(string value, Action<T> onSuccess)
     {
-        if (!switches.TryGetValue(value, out var func))
+        if (!_switches.TryGetValue(value, out var func))
         {
             return;
         }
@@ -82,7 +82,7 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 
     public TX Execute<TX>(string value, Func<T, TX> onSuccess)
     {
-        if (!switches.TryGetValue(value, out var func))
+        if (!_switches.TryGetValue(value, out var func))
         {
             return default;
         }
@@ -96,9 +96,9 @@ public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
         return onSuccess(result);
     }
 
-    public IEnumerator<KeyValuePair<string, Func<T>>> GetEnumerator() => ((IEnumerable<KeyValuePair<string, Func<T>>>)switches).GetEnumerator();
+    public IEnumerator<KeyValuePair<string, Func<T>>> GetEnumerator() => ((IEnumerable<KeyValuePair<string, Func<T>>>)_switches).GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)switches).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_switches).GetEnumerator();
 }
 
 
@@ -108,27 +108,27 @@ public class StringSwitch : IEnumerable<KeyValuePair<string, Action>>
 
     public StringSwitch IgnoreCase => new StringSwitch(StringComparison.OrdinalIgnoreCase, this);
 
-    private readonly Dictionary<string, Action> switches = new();
-    private readonly StringComparison comparison;
+    private readonly Dictionary<string, Action> _switches = new();
+    private readonly StringComparison _comparison;
 
     public StringSwitch(StringComparison comparison = StringComparison.Ordinal, StringSwitch stringSwitch = null)
     {
-        switches = new(StringComparisonHelper.FromComparison(comparison));
+        _switches = new(StringComparisonHelper.FromComparison(comparison));
 
-        if (stringSwitch?.switches is not null)
+        if (stringSwitch?._switches is not null)
         {
-            foreach (var item in stringSwitch?.switches)
+            foreach (var item in stringSwitch?._switches)
             {
-                switches[item.Key] = item.Value;
+                _switches[item.Key] = item.Value;
             }
         }
 
-        this.comparison = comparison;
+        this._comparison = comparison;
     }
 
     public StringSwitch Case(string key, Action action)
     {
-        switches[key] = action;
+        _switches[key] = action;
         return this;
     }
 
@@ -136,17 +136,17 @@ public class StringSwitch : IEnumerable<KeyValuePair<string, Action>>
         => Case(key, () => value);
 
     public StringSwitch<T> Case<T>(string key, Func<T> action)
-        => new StringSwitch<T>(comparison, this).Case(key, action);
+        => new StringSwitch<T>(_comparison, this).Case(key, action);
 
     public void Execute(string value)
     {
-        if (switches.TryGetValue(value, out Action action))
+        if (_switches.TryGetValue(value, out Action action))
         {
             action();
         }
     }
 
-    public IEnumerator<KeyValuePair<string, Action>> GetEnumerator() => ((IEnumerable<KeyValuePair<string, Action>>)switches).GetEnumerator();
+    public IEnumerator<KeyValuePair<string, Action>> GetEnumerator() => ((IEnumerable<KeyValuePair<string, Action>>)_switches).GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)switches).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_switches).GetEnumerator();
 }
