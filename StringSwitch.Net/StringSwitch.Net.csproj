@@ -1,10 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<LangVersion>latest</LangVersion>
+
+	<Version>1.0.0</Version>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Authors>Jonas Kamsker</Authors>
+	<Company>Jonas Kamsker</Company>
+	<Copyright>Jonas Kamsker</Copyright>
+	<PackageProjectUrl>https://github.com/JKamsker/StringSwitch.Net</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/JKamsker/StringSwitch.Net</RepositoryUrl>
+	<Description>Switching on strings without casing</Description>
+
   </PropertyGroup>
 
 </Project>
