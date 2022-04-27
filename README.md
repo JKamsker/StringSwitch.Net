@@ -12,12 +12,12 @@ StringSwitch.New.IgnoreCase
 
 Return results:
 ````csharp
-var @switch = StringSwitch.New.IgnoreCase
+var result = StringSwitch.New.IgnoreCase
     .Case("value1", () => "Value 1 was received")
     .Case("value2", () => "Value 2 was received")
-    .Case("value3", () => "Value 3 was received");
-
-var result = @switch.Execute("Value1");
+    .Case("value3", () => "Value 3 was received")
+    .Execute("Value1");
+    
 Console.WriteLine(result);
 ````
 
