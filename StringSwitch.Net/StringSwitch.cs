@@ -1,9 +1,10 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StringSwitch.Net;
+namespace StringSwitchDotNet;
 
 public class StringSwitch<T> : IEnumerable<KeyValuePair<string, Func<T>>>
 {

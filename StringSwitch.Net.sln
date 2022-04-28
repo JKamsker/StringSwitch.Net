@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringSwitch.Net", "StringSwitch.Net\StringSwitch.Net.csproj", "{11E99992-0403-47AE-9DC8-9EFABD724A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringSwitchDotNet", "StringSwitch.Net\StringSwitchDotNet.csproj", "{11E99992-0403-47AE-9DC8-9EFABD724A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

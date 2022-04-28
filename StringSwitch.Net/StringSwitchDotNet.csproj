@@ -14,7 +14,7 @@
 	<PackageProjectUrl>https://github.com/JKamsker/StringSwitch.Net</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/JKamsker/StringSwitch.Net</RepositoryUrl>
 	<Description>Switching on strings without casing</Description>
-
+	  <PackageId>StringSwitch.Net</PackageId>
   </PropertyGroup>
 
 </Project>
